@@ -44,10 +44,13 @@ export default class ChannelsList extends React.Component {
           <ul className="channels-list">
             {this.state.isLoading && <li>Loading...</li>}
             {this.state.error && (
-              <li>
-                An Error occured while Loading your channels. Try refreshing the
-                browser
-              </li>
+              <>
+                <li>
+                  An Error occured while Loading your channels. Try refreshing
+                  the browser
+                </li>
+                <li>{this.state.error.message}</li>
+              </>
             )}
             {!this.state.isLoading &&
               !!this.state.channels.length &&

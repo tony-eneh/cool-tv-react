@@ -4,13 +4,28 @@ import Header from "../Header/Header";
 import posterImage from "../../images/fight-lady.jpg";
 
 export default class ChannelsSingle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { channelPath: window.location.pathname, channel: {} };
+  }
+
+  componentDidMount() {
+    fetch(`http://localhost:4200/api${this.state.channelPath}`)
+      .then((result) => result.json())
+      .then((data) => {
+        this.setState({ channel: data[0] }); /** it's actually a unit length array, so you take the first member */
+        console.log(`got this data: ${JSON.stringify(data)}`);
+        console.log(`data name: ${data.name}`)
+      });
+  }
+
   render() {
     return (
       <>
         <Header></Header>
         <section className="main channel-single">
           <div className="back-nav-overlay" onclick="toggleOverlay()">
-            <Link to='/channels' className="arrow">
+            <Link to="/channels" className="arrow">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
                 <path
                   id="Shape 3"
@@ -22,19 +37,17 @@ export default class ChannelsSingle extends React.Component {
           </div>
           {/* <!-- TODO put placeholder image in video element below --> */}
           <video
-            src=""
+            src={this.state.channel.url}
             className="channel-stream"
             poster={posterImage}
             onclick="toggleOverlay()"
           />
-          <h3 className="channel-title">MBC Action</h3>
+          <h3 className="channel-title">
+            {this.state.channel.name || "ewoo title"}
+          </h3>
           <div className="channel-description">
             <h4>Description</h4>
-            <p>
-              Lorem ipsum donet mea quia to fix a ball to come up with the
-              perfect way to sel your stuff.
-            </p>
-            <p>Mbc action na we y fight.</p>
+            <p>{this.state.channel.description}</p>
           </div>
         </section>
       </>

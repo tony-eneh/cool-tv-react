@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import posterImage from "../../images/fight-lady.jpg";
+import RxPlayer from "rx-player";
 
 export default class ChannelsSingle extends React.Component {
   constructor(props) {
@@ -13,9 +14,24 @@ export default class ChannelsSingle extends React.Component {
     fetch(`http://localhost:4200/api${this.state.channelPath}`)
       .then((result) => result.json())
       .then((data) => {
-        this.setState({ channel: data[0] }); /** it's actually a unit length array, so you take the first member */
+        this.setState({
+          channel: data[0],
+        }); /** it's actually a unit length array, so you take the first member */
         console.log(`got this data: ${JSON.stringify(data)}`);
-        console.log(`data name: ${data.name}`)
+        console.log(`data name: ${data.name}`);
+      })
+      .then(() => {
+        // instantiate stream player
+        const player = new RxPlayer({
+          videoElement: document.querySelector("video.channel-stream"),
+        });
+
+        // play a video
+        player.loadVideo({
+          url: this.state.channel.url,
+          transport: "dash",
+          autoPlay: true,
+        });
       });
   }
 
@@ -41,6 +57,7 @@ export default class ChannelsSingle extends React.Component {
             className="channel-stream"
             poster={posterImage}
             onclick="toggleOverlay()"
+            controls
           />
           <h3 className="channel-title">
             {this.state.channel.name || "ewoo title"}

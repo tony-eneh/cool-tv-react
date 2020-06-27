@@ -2,7 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Header from "../Header/Header";
 import posterImage from "../../images/fight-lady.jpg";
-import RxPlayer from "rx-player";
+// import RxPlayer from "rx-player";
+// import ShakaPlayer from 'shaka-player-react';
+import Hls from "hls.js";
 
 export default class ChannelsSingle extends React.Component {
   constructor(props) {
@@ -21,17 +23,21 @@ export default class ChannelsSingle extends React.Component {
         console.log(`data name: ${data.name}`);
       })
       .then(() => {
-        // instantiate stream player
-        const player = new RxPlayer({
-          videoElement: document.querySelector("video.channel-stream"),
-        });
-
-        // play a video
-        player.loadVideo({
-          url: this.state.channel.url,
-          transport: "dash",
-          autoPlay: true,
-        });
+        var video = document.querySelector("video.channel-stream");
+        var videoSrc = this.state.channel.url;
+        if (Hls.isSupported()) {
+          var hls = new Hls();
+          hls.loadSource(videoSrc);
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            video.play();
+          });
+        } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+          video.src = videoSrc;
+          video.addEventListener("loadedmetadata", function () {
+            video.play();
+          });
+        }
       });
   }
 
@@ -53,7 +59,6 @@ export default class ChannelsSingle extends React.Component {
           </div>
           {/* <!-- TODO put placeholder image in video element below --> */}
           <video
-            src={this.state.channel.url}
             className="channel-stream"
             poster={posterImage}
             onclick="toggleOverlay()"

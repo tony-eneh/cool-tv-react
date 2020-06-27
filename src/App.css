@@ -84,7 +84,7 @@ a{
 */
 
 video.channel-stream{
-  max-width: 100%;
+  width: 100%;
   display: block; /* this fixes a little space under the video element */
 }
 

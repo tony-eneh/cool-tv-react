@@ -33,13 +33,14 @@ export default class ChannelsList extends React.Component {
   render() {
     return (
       <>
-        <Header></Header>
+        <Header className="header" />
 
         <section className="main">
           {/* <!-- TODO put placeholder image in video element below --> */}
           <div className="channels-title">
             <span>CHANNELS</span>
-            <span className="channels-list-style-toggle"></span>
+
+            <span className={["a-class", "another-class"]}>Channels</span>
           </div>
           <ul className="channels-list">
             {this.state.isLoading && <li>Loading...</li>}
@@ -54,18 +55,9 @@ export default class ChannelsList extends React.Component {
             )}
             {!this.state.isLoading &&
               !!this.state.channels.length &&
-              this.state.channels.map((channel) => {
-                return (
-                  <li key={channel.id}>
-                    <Link to={{ pathname: `/channels/${channel.id}` }}>
-                      {channel.name}
-                    </Link>
-                    <Link to="" onclick="" className="toggle-favourites">
-                      <img src={favouriteIcon} alt="" />
-                    </Link>
-                  </li>
-                );
-              })}
+              this.state.channels.map((channel) => (
+                <li key={channel.id}>{channel.name}</li>
+              ))}
           </ul>
         </section>
       </>

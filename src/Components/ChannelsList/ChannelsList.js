@@ -11,7 +11,6 @@ export default class ChannelsList extends React.Component {
       error: null,
       channels: [],
     };
-    // this.show = this.show.bind(this);
   }
 
   componentDidMount() {
@@ -29,10 +28,6 @@ export default class ChannelsList extends React.Component {
           isLoading: false,
         })
       );
-  }
-
-  shout() {
-    alert("ewoo");
   }
 
   render() {
@@ -64,13 +59,6 @@ export default class ChannelsList extends React.Component {
                 <li key={channel.id}>{channel.name}</li>
               ))}
           </ul>
-          {/* shout is a function defined in this component */}
-          <button
-            onClick={this.shout}
-            style={{ backgroundColor: "yellow", borderRadius: "5px" }}
-          >
-            Y'ello
-          </button>
         </section>
       </>
     );

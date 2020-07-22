@@ -13,7 +13,10 @@ export default class ChannelsSingle extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:4200/api${this.state.channelPath}`)
+    fetch(
+      `process.env.REACT_APP_API_URL${this.state.channelPath}` ||
+        `http://localhost:4200/api${this.state.channelPath}`
+    )
       .then((result) => result.json())
       .then((data) => {
         this.setState({

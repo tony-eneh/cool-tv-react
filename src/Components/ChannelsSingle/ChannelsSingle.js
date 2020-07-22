@@ -13,7 +13,7 @@ export default class ChannelsSingle extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`http://localhost:4200/api${this.state.channelPath}`)
+    fetch(`https://poco-nodejs-demo.herokuapp.com/api${this.state.channelPath}`)
       .then((result) => result.json())
       .then((data) => {
         this.setState({

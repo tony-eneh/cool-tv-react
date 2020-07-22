@@ -14,7 +14,7 @@ export default class ChannelsList extends React.Component {
   }
 
   componentDidMount() {
-    fetch(process.env.REACT_APP_API_URL || 'http://localhost:4200/api/channels')
+    fetch("https://poco-nodejs-demo.herokuapp.com/api/channels")
       .then((result) => result.json())
       .then((data) => {
         this.setState({

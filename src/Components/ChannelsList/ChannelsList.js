@@ -56,7 +56,14 @@ export default class ChannelsList extends React.Component {
             {!this.state.isLoading &&
               !!this.state.channels.length &&
               this.state.channels.map((channel) => (
-                <li key={channel.id}>{channel.name}</li>
+                <li key={channel.id}>
+                  <Link to={{ pathname: `/channels/${channel.id}` }}>
+                    {channel.name}
+                  </Link>
+                  <Link to="" onclick="" className="toggle-favourites">
+                    <img src={favouriteIcon} alt="" />
+                  </Link>
+                </li>
               ))}
           </ul>
         </section>

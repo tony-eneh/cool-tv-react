@@ -1,0 +1,246 @@
+body{
+  /* normalize browser styles */
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  font-family: ;
+  /* used a 50% transparent black below to suppress the background image */
+  background-image: linear-gradient(rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.5) 100%), url('./images/action.webp');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+header{
+  background-color: #0b8c8c;
+  height: 4rem;
+  box-shadow: -5px 5px 5px rgba(0, 0, 0, .5);
+  display: flex;
+  position: sticky;
+  top: 0;
+  padding: 3px;
+  justify-content: space-between;
+  z-index: 10; /* place above all body content */
+}
+
+/* make all images responsive */
+img{
+  max-height: 100%;
+  max-width: 100%;
+}
+
+/* make links conform to theme */
+a{
+  color: #2d2d2d;
+  text-decoration: none;
+}
+.channels-title{
+  background-color: #086666;
+  line-height: 3rem;
+  font-size: 2rem;
+  padding-left: 1rem;
+}
+
+.main{
+  box-shadow: -5px 5px 5px rgba(0, 0, 0, .5);
+  margin: .8rem;
+  background-color: #161616;
+}
+
+.channels-list{
+  list-style: none;
+  padding: 0;
+}
+
+.channels-list li{
+  height: 2rem;
+  padding: 0px 1rem;
+  border-bottom: #2d2d2d 1px solid;
+  display: flex;
+}
+
+.channels-list a{
+  line-height: 2rem; /* achieve vertical centering by matching the parent's height*/
+  display: inline-block;
+  height: 100%; /* contain embedded img within one line height */
+}
+
+.channels-list a:hover{
+  background-color: #0b8c8c;
+}
+
+.channels-list li a:nth-of-type(1){
+  flex-grow: 1; /* make the channel link span the line width excluding just the favourite button */
+}
+
+.channels-list li a:last-of-type img {
+  height: 1rem; /* smaller add-to-favourites icon*/
+  vertical-align: middle;
+}
+
+/**
+*  single channel view
+*/
+
+video.channel-stream{
+  width: 100%;
+  display: block; /* this fixes a little space under the video element */
+}
+
+.channel-single{
+   color: #2d2d2d;
+   position: relative; /* to help position back button and its overlay */
+}
+
+.channel-title{
+  padding: 0 1rem;
+  background-color: #000000;
+  margin: 0;
+  line-height: 2rem;
+  font-size: 1.5rem;
+}
+
+.channel-description h4{
+  color: #08cccc; /* TODO: confirm the correctness according to your palette*/
+  margin: 0;
+}
+
+.channel-description{
+  padding: 0 1rem 1rem;
+  background-color: #161616;
+}
+
+.arrow svg{
+  width: 2rem;
+  fill: #0b8c8c;
+  margin: 1rem;
+  stroke: #000000;
+  stroke-width: 15;
+}
+
+.back-nav-overlay{
+  position: absolute;
+  height: 20rem;
+  width: 100%;
+  background-image: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(0,212,255,0) 100%);
+  z-index: 1; /* place above video element to allow for click events on its anchor */
+  display: none; /* hide by default on mobile */
+}
+
+.menu-btn svg, .close-btn svg{
+  width: 2rem;
+  fill: #2d2d2d;
+  margin-right: 1rem;
+}
+
+.menu-btn{
+  display: flex; /* center inner svg*/
+}
+
+.close-btn{
+  text-align: right;
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  z-index: 20;
+}
+
+.main-menu{
+  background-color: #086666;
+  list-style: none;
+  padding: 3rem 1rem;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  width: 85vw;
+  margin: 0;
+  box-shadow: -20vw 0px 5px rgba(0, 0, 0, .5); /* darken non-menu area */
+  display: flex;
+  flex-direction: column;
+}
+
+/* utility class to hide flyout menu */
+.hidden-menu{
+  right: -200vw;
+}
+
+.main-menu li{
+  /* TODO: remove when you replace imgs with fa icon fonts */
+  height: 2rem; /* give a height so icon img tags would not be too big */
+  border-bottom: solid 1px #2d2d2d;
+  padding: .5rem;
+  display: flex; /* this and line-height below helps center text vertically*/
+  line-height: 2rem;
+}
+
+.main-menu li img{
+  padding-right: 1rem; /* give the text at the right some space */
+  max-width: 1.5rem;
+}
+
+/**
+*  for pc screens
+*/
+
+@media screen 
+and (min-device-width: 1200px) 
+and (-webkit-min-device-pixel-ratio: 1) { 
+    
+  .menu-btn, .close-btn{
+      display: none;
+  }
+
+  /* reset mobile values for pc 
+   * for the original values that were reset check the .main-menu 
+   * default definition up above
+   */
+  .main-menu{
+      background-color: unset;
+      position: static;
+      padding: 1rem;
+      height: unset;
+      top: unset;
+      right: unset;
+      width: unset;
+      box-shadow: unset; 
+      display: flex;
+      flex-direction: row;
+      flex-basis: 50%; /* make it span up to half of the header element's width */
+      justify-content: space-around;
+  }
+
+  .main-menu li{
+      border-bottom: none;
+  }
+
+  .main-menu li img{
+      display: none;
+  }
+
+  /**
+   *  body styles
+   */
+  
+  .main{
+      max-width: 900px;
+      margin: 1rem auto;
+      position: relative; /* to help position the back button on single channel views */
+  }
+
+  /**
+   *  back button
+   */
+  .back-nav-overlay{
+      background-image: none; /* removes linear gradient background */
+      display: block;
+  }
+
+  .arrow svg{
+      position: relative;
+      right: 5rem; /* offset it from the video */
+      filter: drop-shadow(-5px 5px 3px rgba(0, 0, 0, 0.8));
+  }
+
+}
